@@ -18,6 +18,14 @@ Roda o cliente **UNM2000** (FiberHome NMS) nativamente no Linux com Java 21, sem
 | bsdiff | qualquer versão recente |
 | Instalador original | `unm2000_Client_en.exe` (FiberHome) |
 
+O `install.sh` instala `unrar` e `bsdiff` sozinho no Debian/Ubuntu, Fedora e openSUSE.
+**No Arch não há pacote `bsdiff` nos repositórios oficiais** — ele só existe no AUR, e
+helpers de AUR não rodam como root. Instale antes, como usuário normal:
+
+```bash
+paru -S bsdiff        # ou: yay -S bsdiff
+```
+
 ---
 
 ## Instalação
@@ -123,6 +131,13 @@ Instalações existentes: reaplicar o template em `/opt/unm2000/app/etc/unm2000a
 ---
 
 ## Changelog
+
+### v1.2.1 (2026-08-09)
+
+Correção no instalador. Nenhuma mudança nos patches — quem já tem o UNM2000 instalado não precisa reinstalar.
+
+- **`install.sh` abortava no Arch Linux** — a branch do `pacman` chamava `pacman -S --noconfirm bsdiff`, que falha com *"target not found"*: não existe pacote `bsdiff` nos repositórios oficiais do Arch, ele só está no AUR. E helpers de AUR se recusam a rodar como root, que é como o script sempre roda. Agora o caso é detectado e o script aponta `paru`/`yay`/`makepkg` antes de sair, no mesmo padrão que `check_java` já usava para o Java 21.
+- README: a seção de requisitos avisa que no Arch o `bsdiff` precisa ser instalado à mão, antes de rodar o instalador.
 
 ### v1.2 (2026-07-14)
 
